@@ -262,23 +262,23 @@ public func upload(URLRequest: URLRequestConvertible, stream: NSInputStream) -> 
                                          `MultipartFormDataEncodingMemoryThreshold` by default.
     - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
 */
-public func upload(
-    method: Method,
-    _ URLString: URLStringConvertible,
-    headers: [String: String]? = nil,
-    multipartFormData: MultipartFormData -> Void,
-    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
-{
-    return Manager.sharedInstance.upload(
-        method,
-        URLString,
-        headers: headers,
-        multipartFormData: multipartFormData,
-        encodingMemoryThreshold: encodingMemoryThreshold,
-        encodingCompletion: encodingCompletion
-    )
-}
+//public func upload(
+//    method: Method,
+//    _ URLString: URLStringConvertible,
+//    headers: [String: String]? = nil,
+//    multipartFormData: MultipartFormData -> Void,
+//    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+//    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+//{
+//    return Manager.sharedInstance.upload(
+//        method,
+//        URLString,
+//        headers: headers,
+//        multipartFormData: multipartFormData,
+//        encodingMemoryThreshold: encodingMemoryThreshold,
+//        encodingCompletion: encodingCompletion
+//    )
+//}
 
 /**
     Creates an upload request using the shared manager instance for the specified method and URL string.
@@ -289,19 +289,19 @@ public func upload(
                                          `MultipartFormDataEncodingMemoryThreshold` by default.
     - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
 */
-public func upload(
-    URLRequest: URLRequestConvertible,
-    multipartFormData: MultipartFormData -> Void,
-    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
-{
-    return Manager.sharedInstance.upload(
-        URLRequest,
-        multipartFormData: multipartFormData,
-        encodingMemoryThreshold: encodingMemoryThreshold,
-        encodingCompletion: encodingCompletion
-    )
-}
+//public func upload(
+//    URLRequest: URLRequestConvertible,
+//    multipartFormData: MultipartFormData -> Void,
+//    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+//    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+//{
+//    return Manager.sharedInstance.upload(
+//        URLRequest,
+//        multipartFormData: multipartFormData,
+//        encodingMemoryThreshold: encodingMemoryThreshold,
+//        encodingCompletion: encodingCompletion
+//    )
+//}
 
 // MARK: - Download Methods
 

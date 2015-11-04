@@ -231,23 +231,23 @@ extension Manager {
                                              `MultipartFormDataEncodingMemoryThreshold` by default.
         - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
     */
-    public func upload(
-        method: Method,
-        _ URLString: URLStringConvertible,
-        headers: [String: String]? = nil,
-        multipartFormData: MultipartFormData -> Void,
-        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
-    {
-        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
-
-        return upload(
-            mutableURLRequest,
-            multipartFormData: multipartFormData,
-            encodingMemoryThreshold: encodingMemoryThreshold,
-            encodingCompletion: encodingCompletion
-        )
-    }
+//    public func upload(
+//        method: Method,
+//        _ URLString: URLStringConvertible,
+//        headers: [String: String]? = nil,
+//        multipartFormData: MultipartFormData -> Void,
+//        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+//        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
+//    {
+//        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+//
+//        return upload(
+//            mutableURLRequest,
+//            multipartFormData: multipartFormData,
+//            encodingMemoryThreshold: encodingMemoryThreshold,
+//            encodingCompletion: encodingCompletion
+//        )
+//    }
 
     /**
         Encodes the `MultipartFormData` and creates a request to upload the result to the specified URL request.
@@ -273,65 +273,65 @@ extension Manager {
                                              `MultipartFormDataEncodingMemoryThreshold` by default.
         - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
     */
-    public func upload(
-        URLRequest: URLRequestConvertible,
-        multipartFormData: MultipartFormData -> Void,
-        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let formData = MultipartFormData()
-            multipartFormData(formData)
-
-            let URLRequestWithContentType = URLRequest.URLRequest
-            URLRequestWithContentType.setValue(formData.contentType, forHTTPHeaderField: "Content-Type")
-
-            let isBackgroundSession = self.session.configuration.identifier != nil
-
-            if formData.contentLength < encodingMemoryThreshold && !isBackgroundSession {
-                do {
-                    let data = try formData.encode()
-                    let encodingResult = MultipartFormDataEncodingResult.Success(
-                        request: self.upload(URLRequestWithContentType, data: data),
-                        streamingFromDisk: false,
-                        streamFileURL: nil
-                    )
-
-                    dispatch_async(dispatch_get_main_queue()) {
-                        encodingCompletion?(encodingResult)
-                    }
-                } catch {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        encodingCompletion?(.Failure(error as NSError))
-                    }
-                }
-            } else {
-                let fileManager = NSFileManager.defaultManager()
-                let tempDirectoryURL = NSURL(fileURLWithPath: NSTemporaryDirectory())
-                let directoryURL = tempDirectoryURL.URLByAppendingPathComponent("com.alamofire.manager/multipart.form.data")
-                let fileName = NSUUID().UUIDString
-                let fileURL = directoryURL.URLByAppendingPathComponent(fileName)
-
-                do {
-                    try fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil)
-                    try formData.writeEncodedDataToDisk(fileURL)
-
-                    dispatch_async(dispatch_get_main_queue()) {
-                        let encodingResult = MultipartFormDataEncodingResult.Success(
-                            request: self.upload(URLRequestWithContentType, file: fileURL),
-                            streamingFromDisk: true,
-                            streamFileURL: fileURL
-                        )
-                        encodingCompletion?(encodingResult)
-                    }
-                } catch {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        encodingCompletion?(.Failure(error as NSError))
-                    }
-                }
-            }
-        }
-    }
+//    public func upload(
+//        URLRequest: URLRequestConvertible,
+//        multipartFormData: MultipartFormData -> Void,
+//        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+//        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
+//    {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+//            let formData = MultipartFormData()
+//            multipartFormData(formData)
+//
+//            let URLRequestWithContentType = URLRequest.URLRequest
+//            URLRequestWithContentType.setValue(formData.contentType, forHTTPHeaderField: "Content-Type")
+//
+//            let isBackgroundSession = self.session.configuration.identifier != nil
+//
+//            if formData.contentLength < encodingMemoryThreshold && !isBackgroundSession {
+//                do {
+//                    let data = try formData.encode()
+//                    let encodingResult = MultipartFormDataEncodingResult.Success(
+//                        request: self.upload(URLRequestWithContentType, data: data),
+//                        streamingFromDisk: false,
+//                        streamFileURL: nil
+//                    )
+//
+//                    dispatch_async(dispatch_get_main_queue()) {
+//                        encodingCompletion?(encodingResult)
+//                    }
+//                } catch {
+//                    dispatch_async(dispatch_get_main_queue()) {
+//                        encodingCompletion?(.Failure(error as NSError))
+//                    }
+//                }
+//            } else {
+//                let fileManager = NSFileManager.defaultManager()
+//                let tempDirectoryURL = NSURL(fileURLWithPath: NSTemporaryDirectory())
+//                let directoryURL = tempDirectoryURL.URLByAppendingPathComponent("com.alamofire.manager/multipart.form.data")
+//                let fileName = NSUUID().UUIDString
+//                let fileURL = directoryURL.URLByAppendingPathComponent(fileName)
+//
+//                do {
+//                    try fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil)
+//                    try formData.writeEncodedDataToDisk(fileURL)
+//
+//                    dispatch_async(dispatch_get_main_queue()) {
+//                        let encodingResult = MultipartFormDataEncodingResult.Success(
+//                            request: self.upload(URLRequestWithContentType, file: fileURL),
+//                            streamingFromDisk: true,
+//                            streamFileURL: fileURL
+//                        )
+//                        encodingCompletion?(encodingResult)
+//                    }
+//                } catch {
+//                    dispatch_async(dispatch_get_main_queue()) {
+//                        encodingCompletion?(.Failure(error as NSError))
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 // MARK: -
