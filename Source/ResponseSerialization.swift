@@ -37,7 +37,7 @@ public protocol ResponseSerializerType {
     /**
         A closure used by response handlers that takes a request, response, data and error and returns a result.
     */
-    var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<SerializedObject, ErrorObject> { get }
+    var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> AlamofireResult<SerializedObject, ErrorObject> { get }
 }
 
 // MARK: -
@@ -55,7 +55,7 @@ public struct ResponseSerializer<Value, Error: ErrorType>: ResponseSerializerTyp
     /**
         A closure used by response handlers that takes a request, response, data and error and returns a result.
     */
-    public var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, Error>
+    public var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> AlamofireResult<Value, Error>
 
     /**
         Initializes the `ResponseSerializer` instance with the given serialize response closure.
@@ -64,7 +64,7 @@ public struct ResponseSerializer<Value, Error: ErrorType>: ResponseSerializerTyp
 
         - returns: The new generic response serializer instance.
     */
-    public init(serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, Error>) {
+    public init(serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> AlamofireResult<Value, Error>) {
         self.serializeResponse = serializeResponse
     }
 }

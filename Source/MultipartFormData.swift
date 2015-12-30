@@ -42,6 +42,7 @@ import CoreServices
     - https://www.ietf.org/rfc/rfc2045.txt
     - https://www.w3.org/TR/html401/interact/forms.html#h-17.13
 */
+@available(iOS 8.0, *)
 public class MultipartFormData {
 
     // MARK: - Helper Types

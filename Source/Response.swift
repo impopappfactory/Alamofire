@@ -34,7 +34,7 @@ public struct Response<Value, Error: ErrorType> {
     public let data: NSData?
 
     /// The result of response serialization.
-    public let result: Result<Value, Error>
+    public let result: AlamofireResult<Value, Error>
 
     /**
         Initializes the `Response` instance with the specified URL request, URL response, server data and response
@@ -47,7 +47,7 @@ public struct Response<Value, Error: ErrorType> {
     
         - returns: the new `Response` instance.
     */
-    public init(request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, result: Result<Value, Error>) {
+    public init(request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, result: AlamofireResult<Value, Error>) {
         self.request = request
         self.response = response
         self.data = data
