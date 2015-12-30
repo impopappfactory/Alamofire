@@ -27,7 +27,7 @@ import Foundation
 
     See https://tools.ietf.org/html/rfc7231#section-4.3
 */
-public enum Method: String {
+public enum HttpMethod: String {
     case OPTIONS, GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, CONNECT
 }
 
@@ -101,7 +101,7 @@ public enum ParameterEncoding {
                 return (components.map { "\($0)=\($1)" } as [String]).joinWithSeparator("&")
             }
 
-            func encodesParametersInURL(method: Method) -> Bool {
+            func encodesParametersInURL(method: HttpMethod) -> Bool {
                 switch self {
                 case .URLEncodedInURL:
                     return true
@@ -117,7 +117,7 @@ public enum ParameterEncoding {
                 }
             }
 
-            if let method = Method(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
+            if let method = HttpMethod(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
                 if let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false) {
                     let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
                     URLComponents.percentEncodedQuery = percentEncodedQuery

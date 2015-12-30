@@ -77,7 +77,7 @@ extension Manager {
         - returns: The created download request.
     */
     public func download(
-        method: Method,
+        method: HttpMethod,
         _ URLString: URLStringConvertible,
         parameters: [String: AnyObject]? = nil,
         encoding: ParameterEncoding = .URL,

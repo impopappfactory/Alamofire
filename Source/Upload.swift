@@ -96,7 +96,7 @@ extension Manager {
         - returns: The created upload request.
     */
     public func upload(
-        method: Method,
+        method: HttpMethod,
         _ URLString: URLStringConvertible,
         headers: [String: String]? = nil,
         file: NSURL)
@@ -135,7 +135,7 @@ extension Manager {
         - returns: The created upload request.
     */
     public func upload(
-        method: Method,
+        method: HttpMethod,
         _ URLString: URLStringConvertible,
         headers: [String: String]? = nil,
         data: NSData)
@@ -175,7 +175,7 @@ extension Manager {
         - returns: The created upload request.
     */
     public func upload(
-        method: Method,
+        method: HttpMethod,
         _ URLString: URLStringConvertible,
         headers: [String: String]? = nil,
         stream: NSInputStream)
@@ -232,7 +232,7 @@ extension Manager {
         - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
     */
 //    public func upload(
-//        method: Method,
+//        method: HttpMethod,
 //        _ URLString: URLStringConvertible,
 //        headers: [String: String]? = nil,
 //        multipartFormData: MultipartFormData -> Void,
