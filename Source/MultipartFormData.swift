@@ -218,7 +218,7 @@ public class MultipartFormData {
             appendBodyPart(fileURL: fileURL, name: name, fileName: fileName, mimeType: mimeType)
         } else {
             let failureReason = "Failed to extract the fileName of the provided URL: \(fileURL)"
-            setBodyPartError(Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason))
+            setBodyPartError(AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason))
         }
     }
 
@@ -246,7 +246,7 @@ public class MultipartFormData {
 
         guard fileURL.fileURL else {
             let failureReason = "The file URL does not point to a file URL: \(fileURL)"
-            let error = Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
+            let error = AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
             setBodyPartError(error)
             return
         }
@@ -262,7 +262,7 @@ public class MultipartFormData {
         }
 
         guard isReachable else {
-            let error = Error.errorWithCode(NSURLErrorBadURL, failureReason: "The file URL is not reachable: \(fileURL)")
+            let error = AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: "The file URL is not reachable: \(fileURL)")
             setBodyPartError(error)
             return
         }
@@ -278,7 +278,7 @@ public class MultipartFormData {
             where NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isDirectory) && !isDirectory else
         {
             let failureReason = "The file URL is a directory, not a file: \(fileURL)"
-            let error = Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
+            let error = AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
             setBodyPartError(error)
             return
         }
@@ -302,7 +302,7 @@ public class MultipartFormData {
 
         guard let length = bodyContentLength else {
             let failureReason = "Could not fetch attributes from the file URL: \(fileURL)"
-            let error = Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
+            let error = AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
             setBodyPartError(error)
             return
         }
@@ -313,7 +313,7 @@ public class MultipartFormData {
 
         guard let stream = NSInputStream(URL: fileURL) else {
             let failureReason = "Failed to create an input stream from the file URL: \(fileURL)"
-            let error = Error.errorWithCode(NSURLErrorCannotOpenFile, failureReason: failureReason)
+            let error = AlamofireError.errorWithCode(NSURLErrorCannotOpenFile, failureReason: failureReason)
             setBodyPartError(error)
             return
         }
@@ -414,10 +414,10 @@ public class MultipartFormData {
 
         if let path = fileURL.path where NSFileManager.defaultManager().fileExistsAtPath(path) {
             let failureReason = "A file already exists at the given file URL: \(fileURL)"
-            throw Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
+            throw AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
         } else if !fileURL.fileURL {
             let failureReason = "The URL does not point to a valid file: \(fileURL)"
-            throw Error.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
+            throw AlamofireError.errorWithCode(NSURLErrorBadURL, failureReason: failureReason)
         }
 
         let outputStream: NSOutputStream
@@ -426,7 +426,7 @@ public class MultipartFormData {
             outputStream = possibleOutputStream
         } else {
             let failureReason = "Failed to create an output stream with the given URL: \(fileURL)"
-            throw Error.errorWithCode(NSURLErrorCannotOpenFile, failureReason: failureReason)
+            throw AlamofireError.errorWithCode(NSURLErrorCannotOpenFile, failureReason: failureReason)
         }
 
         outputStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -496,7 +496,7 @@ public class MultipartFormData {
                 encoded.appendBytes(buffer, length: bytesRead)
             } else if bytesRead < 0 {
                 let failureReason = "Failed to read from input stream: \(inputStream)"
-                error = Error.errorWithCode(.InputStreamReadFailed, failureReason: failureReason)
+                error = AlamofireError.errorWithCode(.InputStreamReadFailed, failureReason: failureReason)
                 break
             } else {
                 break
@@ -557,7 +557,7 @@ public class MultipartFormData {
                 try writeBuffer(&buffer, toOutputStream: outputStream)
             } else if bytesRead < 0 {
                 let failureReason = "Failed to read from input stream: \(inputStream)"
-                throw Error.errorWithCode(.InputStreamReadFailed, failureReason: failureReason)
+                throw AlamofireError.errorWithCode(.InputStreamReadFailed, failureReason: failureReason)
             } else {
                 break
             }
@@ -599,7 +599,7 @@ public class MultipartFormData {
 
                 if bytesWritten < 0 {
                     let failureReason = "Failed to write to output stream: \(outputStream)"
-                    throw Error.errorWithCode(.OutputStreamWriteFailed, failureReason: failureReason)
+                    throw AlamofireError.errorWithCode(.OutputStreamWriteFailed, failureReason: failureReason)
                 }
 
                 bytesToWrite -= bytesWritten

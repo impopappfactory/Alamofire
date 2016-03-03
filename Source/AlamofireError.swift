@@ -23,7 +23,7 @@
 import Foundation
 
 /// The `Error` struct provides a convenience for creating custom Alamofire NSErrors.
-public struct Error {
+public struct AlamofireError {
     /// The domain used for creating all Alamofire errors.
     public static let Domain = "com.alamofire.error"
 
