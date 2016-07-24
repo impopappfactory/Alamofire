@@ -36,7 +36,7 @@ public struct Response<Value, AlamofireError: ErrorType> {
     public let data: NSData?
 
     /// The result of response serialization.
-    public let result: Result<Value, AlamofireError>
+    public let result: AlamofireResult<Value, AlamofireError>
 
     /// The timeline of the complete lifecycle of the `Request`.
     public let timeline: Timeline
@@ -57,7 +57,7 @@ public struct Response<Value, AlamofireError: ErrorType> {
         request: NSURLRequest?,
         response: NSHTTPURLResponse?,
         data: NSData?,
-        result: Result<Value, AlamofireError>,
+        result: AlamofireResult<Value, AlamofireError>,
         timeline: Timeline = Timeline())
     {
         self.request = request
