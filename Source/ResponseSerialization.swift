@@ -47,17 +47,17 @@ public protocol ResponseSerializerType {
 /**
     A generic `ResponseSerializerType` used to serialize a request, response, and data into a serialized object.
 */
-public struct ResponseSerializer<Value, Error: ErrorType>: ResponseSerializerType {
+public struct ResponseSerializer<Value, AlamofireError: ErrorType>: ResponseSerializerType {
     /// The type of serialized object to be created by this `ResponseSerializer`.
     public typealias SerializedObject = Value
 
     /// The type of error to be created by this `ResponseSerializer` if serialization fails.
-    public typealias ErrorObject = Error
+    public typealias ErrorObject = AlamofireError
 
     /**
         A closure used by response handlers that takes a request, response, data and error and returns a result.
     */
-    public var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, Error>
+    public var serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, AlamofireError>
 
     /**
         Initializes the `ResponseSerializer` instance with the given serialize response closure.
@@ -66,7 +66,7 @@ public struct ResponseSerializer<Value, Error: ErrorType>: ResponseSerializerTyp
 
         - returns: The new generic response serializer instance.
     */
-    public init(serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, Error>) {
+    public init(serializeResponse: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?) -> Result<Value, AlamofireError>) {
         self.serializeResponse = serializeResponse
     }
 }
@@ -163,7 +163,7 @@ extension Request {
 
             guard let validData = data else {
                 let failureReason = "Data could not be serialized. Input data was nil."
-                let error = Error.error(code: .DataSerializationFailed, failureReason: failureReason)
+                let error = AlamofireError.error(code: .DataSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
             }
 
@@ -211,7 +211,7 @@ extension Request {
 
             guard let validData = data else {
                 let failureReason = "String could not be serialized. Input data was nil."
-                let error = Error.error(code: .StringSerializationFailed, failureReason: failureReason)
+                let error = AlamofireError.error(code: .StringSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
             }
             
@@ -229,7 +229,7 @@ extension Request {
                 return .Success(string)
             } else {
                 let failureReason = "String could not be serialized with encoding: \(actualEncoding)"
-                let error = Error.error(code: .StringSerializationFailed, failureReason: failureReason)
+                let error = AlamofireError.error(code: .StringSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
             }
         }
@@ -282,7 +282,7 @@ extension Request {
 
             guard let validData = data where validData.length > 0 else {
                 let failureReason = "JSON could not be serialized. Input data was nil or zero length."
-                let error = Error.error(code: .JSONSerializationFailed, failureReason: failureReason)
+                let error = AlamofireError.error(code: .JSONSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
             }
 
@@ -340,7 +340,7 @@ extension Request {
 
             guard let validData = data where validData.length > 0 else {
                 let failureReason = "Property list could not be serialized. Input data was nil or zero length."
-                let error = Error.error(code: .PropertyListSerializationFailed, failureReason: failureReason)
+                let error = AlamofireError.error(code: .PropertyListSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
             }
 

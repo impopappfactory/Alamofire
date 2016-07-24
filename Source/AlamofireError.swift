@@ -1,5 +1,5 @@
 //
-//  Error.swift
+//  AlamofireError.swift
 //
 //  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -24,8 +24,8 @@
 
 import Foundation
 
-/// The `Error` struct provides a convenience for creating custom Alamofire NSErrors.
-public struct Error {
+/// The `AlamofireError` struct provides a convenience for creating custom Alamofire NSErrors.
+public struct AlamofireError {
     /// The domain used for creating all Alamofire errors.
     public static let Domain = "com.alamofire.error"
 
@@ -77,11 +77,11 @@ public struct Error {
         return NSError(domain: Domain, code: code, userInfo: userInfo)
     }
 
-    static func error(domain domain: String = Error.Domain, code: Code, failureReason: String) -> NSError {
+    static func error(domain domain: String = AlamofireError.Domain, code: Code, failureReason: String) -> NSError {
         return error(domain: domain, code: code.rawValue, failureReason: failureReason)
     }
 
-    static func error(domain domain: String = Error.Domain, code: Int, failureReason: String) -> NSError {
+    static func error(domain domain: String = AlamofireError.Domain, code: Int, failureReason: String) -> NSError {
         let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
         return NSError(domain: domain, code: code, userInfo: userInfo)
     }
