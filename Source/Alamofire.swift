@@ -125,7 +125,7 @@ public func request(
     headers: [String: String]? = nil)
     -> Request
 {
-    return Manager.sharedInstance.request(
+    return AlamofireManager.sharedInstance.request(
         method,
         URLString,
         parameters: parameters,
@@ -144,7 +144,7 @@ public func request(
     - returns: The created request.
 */
 public func request(URLRequest: URLRequestConvertible) -> Request {
-    return Manager.sharedInstance.request(URLRequest.URLRequest)
+    return AlamofireManager.sharedInstance.request(URLRequest.URLRequest)
 }
 
 // MARK: - Upload Methods
@@ -168,7 +168,7 @@ public func upload(
     file: NSURL)
     -> Request
 {
-    return Manager.sharedInstance.upload(method, URLString, headers: headers, file: file)
+    return AlamofireManager.sharedInstance.upload(method, URLString, headers: headers, file: file)
 }
 
 /**
@@ -180,7 +180,7 @@ public func upload(
     - returns: The created upload request.
 */
 public func upload(URLRequest: URLRequestConvertible, file: NSURL) -> Request {
-    return Manager.sharedInstance.upload(URLRequest, file: file)
+    return AlamofireManager.sharedInstance.upload(URLRequest, file: file)
 }
 
 // MARK: Data
@@ -202,7 +202,7 @@ public func upload(
     data: NSData)
     -> Request
 {
-    return Manager.sharedInstance.upload(method, URLString, headers: headers, data: data)
+    return AlamofireManager.sharedInstance.upload(method, URLString, headers: headers, data: data)
 }
 
 /**
@@ -214,7 +214,7 @@ public func upload(
     - returns: The created upload request.
 */
 public func upload(URLRequest: URLRequestConvertible, data: NSData) -> Request {
-    return Manager.sharedInstance.upload(URLRequest, data: data)
+    return AlamofireManager.sharedInstance.upload(URLRequest, data: data)
 }
 
 // MARK: Stream
@@ -236,7 +236,7 @@ public func upload(
     stream: NSInputStream)
     -> Request
 {
-    return Manager.sharedInstance.upload(method, URLString, headers: headers, stream: stream)
+    return AlamofireManager.sharedInstance.upload(method, URLString, headers: headers, stream: stream)
 }
 
 /**
@@ -248,7 +248,7 @@ public func upload(
     - returns: The created upload request.
 */
 public func upload(URLRequest: URLRequestConvertible, stream: NSInputStream) -> Request {
-    return Manager.sharedInstance.upload(URLRequest, stream: stream)
+    return AlamofireManager.sharedInstance.upload(URLRequest, stream: stream)
 }
 
 // MARK: MultipartFormData
@@ -269,10 +269,10 @@ public func upload(
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil,
     multipartFormData: MultipartFormData -> Void,
-    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+    encodingMemoryThreshold: UInt64 = AlamofireManager.MultipartFormDataEncodingMemoryThreshold,
+    encodingCompletion: (AlamofireManager.MultipartFormDataEncodingResult -> Void)?)
 {
-    return Manager.sharedInstance.upload(
+    return AlamofireManager.sharedInstance.upload(
         method,
         URLString,
         headers: headers,
@@ -294,10 +294,10 @@ public func upload(
 public func upload(
     URLRequest: URLRequestConvertible,
     multipartFormData: MultipartFormData -> Void,
-    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-    encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+    encodingMemoryThreshold: UInt64 = AlamofireManager.MultipartFormDataEncodingMemoryThreshold,
+    encodingCompletion: (AlamofireManager.MultipartFormDataEncodingResult -> Void)?)
 {
-    return Manager.sharedInstance.upload(
+    return AlamofireManager.sharedInstance.upload(
         URLRequest,
         multipartFormData: multipartFormData,
         encodingMemoryThreshold: encodingMemoryThreshold,
@@ -330,7 +330,7 @@ public func download(
     destination: Request.DownloadFileDestination)
     -> Request
 {
-    return Manager.sharedInstance.download(
+    return AlamofireManager.sharedInstance.download(
         method,
         URLString,
         parameters: parameters,
@@ -349,7 +349,7 @@ public func download(
     - returns: The created download request.
 */
 public func download(URLRequest: URLRequestConvertible, destination: Request.DownloadFileDestination) -> Request {
-    return Manager.sharedInstance.download(URLRequest, destination: destination)
+    return AlamofireManager.sharedInstance.download(URLRequest, destination: destination)
 }
 
 // MARK: Resume Data
@@ -366,5 +366,5 @@ public func download(URLRequest: URLRequestConvertible, destination: Request.Dow
     - returns: The created download request.
 */
 public func download(resumeData data: NSData, destination: Request.DownloadFileDestination) -> Request {
-    return Manager.sharedInstance.download(data, destination: destination)
+    return AlamofireManager.sharedInstance.download(data, destination: destination)
 }

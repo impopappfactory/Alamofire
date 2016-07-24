@@ -1,5 +1,5 @@
 //
-//  Manager.swift
+//  AlamofireManager.swift
 //
 //  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -27,19 +27,19 @@ import Foundation
 /**
     Responsible for creating and managing `Request` objects, as well as their underlying `NSURLSession`.
 */
-public class Manager {
+public class AlamofireManager {
 
     // MARK: - Properties
 
     /**
-        A shared instance of `Manager`, used by top-level Alamofire request methods, and suitable for use directly 
+        A shared instance of `AlamofireManager`, used by top-level Alamofire request methods, and suitable for use directly
         for any ad hoc requests.
     */
-    public static let sharedInstance: Manager = {
+    public static let sharedInstance: AlamofireManager = {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+        configuration.HTTPAdditionalHeaders = AlamofireManager.defaultHTTPHeaders
 
-        return Manager(configuration: configuration)
+        return AlamofireManager(configuration: configuration)
     }()
 
     /**
@@ -131,7 +131,7 @@ public class Manager {
     // MARK: - Lifecycle
 
     /**
-        Initializes the `Manager` instance with the specified configuration, delegate and server trust policy.
+        Initializes the `AlamofireManager` instance with the specified configuration, delegate and server trust policy.
 
         - parameter configuration:            The configuration used to construct the managed session. 
                                               `NSURLSessionConfiguration.defaultSessionConfiguration()` by default.
@@ -140,7 +140,7 @@ public class Manager {
         - parameter serverTrustPolicyManager: The server trust policy manager to use for evaluating all server trust 
                                               challenges. `nil` by default.
 
-        - returns: The new `Manager` instance.
+        - returns: The new `AlamofireManager` instance.
     */
     public init(
         configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -154,14 +154,14 @@ public class Manager {
     }
 
     /**
-        Initializes the `Manager` instance with the specified session, delegate and server trust policy.
+        Initializes the `AlamofireManager` instance with the specified session, delegate and server trust policy.
 
         - parameter session:                  The URL session.
         - parameter delegate:                 The delegate of the URL session. Must equal the URL session's delegate.
         - parameter serverTrustPolicyManager: The server trust policy manager to use for evaluating all server trust
                                               challenges. `nil` by default.
 
-        - returns: The new `Manager` instance if the URL session's delegate matches the delegate parameter.
+        - returns: The new `AlamofireManager` instance if the URL session's delegate matches the delegate parameter.
     */
     public init?(
         session: NSURLSession,

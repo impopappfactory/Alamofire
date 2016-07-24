@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension Manager {
+extension AlamofireManager {
     private enum Downloadable {
         case Request(NSURLRequest)
         case ResumeData(NSData)

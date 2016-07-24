@@ -27,7 +27,7 @@ import Foundation
 #if !os(watchOS)
 
 @available(iOS 9.0, OSX 10.11, tvOS 9.0, *)
-extension Manager {
+extension AlamofireManager {
     private enum Streamable {
         case Stream(String, Int)
         case NetService(NSNetService)
@@ -85,7 +85,7 @@ extension Manager {
 // MARK: -
 
 @available(iOS 9.0, OSX 10.11, tvOS 9.0, *)
-extension Manager.SessionDelegate: NSURLSessionStreamDelegate {
+extension AlamofireManager.SessionDelegate: NSURLSessionStreamDelegate {
 
     // MARK: Override Closures
 

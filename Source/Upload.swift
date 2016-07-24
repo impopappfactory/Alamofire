@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension Manager {
+extension AlamofireManager {
     private enum Uploadable {
         case Data(NSURLRequest, NSData)
         case File(NSURLRequest, NSURL)
@@ -238,7 +238,7 @@ extension Manager {
         _ URLString: URLStringConvertible,
         headers: [String: String]? = nil,
         multipartFormData: MultipartFormData -> Void,
-        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+        encodingMemoryThreshold: UInt64 = AlamofireManager.MultipartFormDataEncodingMemoryThreshold,
         encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
     {
         let mutableURLRequest = URLRequest(method, URLString, headers: headers)
@@ -278,7 +278,7 @@ extension Manager {
     public func upload(
         URLRequest: URLRequestConvertible,
         multipartFormData: MultipartFormData -> Void,
-        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+        encodingMemoryThreshold: UInt64 = AlamofireManager.MultipartFormDataEncodingMemoryThreshold,
         encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
