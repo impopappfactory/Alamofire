@@ -65,7 +65,7 @@ public class AlamofireManager {
                 let osNameVersion: String = {
                     let versionString: String
 
-                    if #available(OSX 10.10, *) {
+                    if #available(OSX 10.10, iOS 8.0, *) {
                         let version = NSProcessInfo.processInfo().operatingSystemVersion
                         versionString = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
                     } else {
