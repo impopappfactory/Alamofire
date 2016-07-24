@@ -86,7 +86,7 @@ extension NSURLRequest: URLRequestConvertible {
 // MARK: - Convenience
 
 func URLRequest(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil)
     -> NSMutableURLRequest
@@ -118,7 +118,7 @@ func URLRequest(
     - returns: The created request.
 */
 public func request(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     parameters: [String: AnyObject]? = nil,
     encoding: ParameterEncoding = .URL,
@@ -162,7 +162,7 @@ public func request(URLRequest: URLRequestConvertible) -> Request {
     - returns: The created upload request.
 */
 public func upload(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil,
     file: NSURL)
@@ -196,7 +196,7 @@ public func upload(URLRequest: URLRequestConvertible, file: NSURL) -> Request {
     - returns: The created upload request.
 */
 public func upload(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil,
     data: NSData)
@@ -230,7 +230,7 @@ public func upload(URLRequest: URLRequestConvertible, data: NSData) -> Request {
     - returns: The created upload request.
 */
 public func upload(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil,
     stream: NSInputStream)
@@ -265,7 +265,7 @@ public func upload(URLRequest: URLRequestConvertible, stream: NSInputStream) -> 
     - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
 */
 public func upload(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     headers: [String: String]? = nil,
     multipartFormData: MultipartFormData -> Void,
@@ -322,7 +322,7 @@ public func upload(
     - returns: The created download request.
 */
 public func download(
-    method: Method,
+    method: HttpMethod,
     _ URLString: URLStringConvertible,
     parameters: [String: AnyObject]? = nil,
     encoding: ParameterEncoding = .URL,

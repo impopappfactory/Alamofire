@@ -203,7 +203,7 @@ public class AlamofireManager {
         - returns: The created request.
     */
     public func request(
-        method: Method,
+        method: HttpMethod,
         _ URLString: URLStringConvertible,
         parameters: [String: AnyObject]? = nil,
         encoding: ParameterEncoding = .URL,
