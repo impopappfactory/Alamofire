@@ -51,7 +51,7 @@ public enum HttpMethod: String {
 
     - `JSON`:            Uses `NSJSONSerialization` to create a JSON representation of the parameters object, which is 
                          set as the body of the request. The `Content-Type` HTTP header field of an encoded request is 
-                         set to `application/json`.
+                         set to `application/json; charset=utf-8`.
 
     - `PropertyList`:    Uses `NSPropertyListSerialization` to create a plist representation of the parameters object,
                          according to the associated format and write options values, which is set as the body of the
@@ -145,7 +145,7 @@ public enum ParameterEncoding {
                 let data = try NSJSONSerialization.dataWithJSONObject(parameters, options: options)
 
                 if mutableURLRequest.valueForHTTPHeaderField("Content-Type") == nil {
-                    mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    mutableURLRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
                 }
 
                 mutableURLRequest.HTTPBody = data
