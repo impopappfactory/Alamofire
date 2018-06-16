@@ -190,7 +190,7 @@ class CacheTestCase: BaseTestCase {
         let request = manager.request(urlRequest)
 
         request.response(
-            queue: queue,
+            scheduler: DispatchQueueScheduler(queue: queue),
             completionHandler: { response in
                 completion(response.request, response.response)
             }

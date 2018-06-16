@@ -111,9 +111,9 @@ extension DataRequest {
     ///
     /// - returns: The request.
     @discardableResult
-    public func response(queue: DispatchQueue? = nil, completionHandler: @escaping (DefaultDataResponse) -> Void) -> Self {
+    public func response(scheduler: SchedulerType? = nil, completionHandler: @escaping (DefaultDataResponse) -> Void) -> Self {
         delegate.queue.addOperation {
-            (queue ?? DispatchQueue.main).async {
+            (scheduler ?? Scheduler.main).schedule {
                 var dataResponse = DefaultDataResponse(
                     request: self.request,
                     response: self.response,
@@ -141,7 +141,7 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func response<T: DataResponseSerializerProtocol>(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         responseSerializer: T,
         completionHandler: @escaping (DataResponse<T.SerializedObject>) -> Void)
         -> Self
@@ -164,7 +164,7 @@ extension DataRequest {
 
             dataResponse.add(self.delegate.metrics)
 
-            (queue ?? DispatchQueue.main).async { completionHandler(dataResponse) }
+            (scheduler ?? Scheduler.main).schedule { completionHandler(dataResponse) }
         }
 
         return self
@@ -180,12 +180,12 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func response(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         completionHandler: @escaping (DefaultDownloadResponse) -> Void)
         -> Self
     {
         delegate.queue.addOperation {
-            (queue ?? DispatchQueue.main).async {
+            (scheduler ?? Scheduler.main).schedule {
                 var downloadResponse = DefaultDownloadResponse(
                     request: self.request,
                     response: self.response,
@@ -215,7 +215,7 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func response<T: DownloadResponseSerializerProtocol>(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         responseSerializer: T,
         completionHandler: @escaping (DownloadResponse<T.SerializedObject>) -> Void)
         -> Self
@@ -240,7 +240,7 @@ extension DownloadRequest {
 
             downloadResponse.add(self.delegate.metrics)
 
-            (queue ?? DispatchQueue.main).async { completionHandler(downloadResponse) }
+            (scheduler ?? Scheduler.main).schedule { completionHandler(downloadResponse) }
         }
 
         return self
@@ -287,12 +287,12 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func responseData(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         completionHandler: @escaping (DataResponse<Data>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DataRequest.dataResponseSerializer(),
             completionHandler: completionHandler
         )
@@ -327,12 +327,12 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func responseData(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         completionHandler: @escaping (DownloadResponse<Data>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DownloadRequest.dataResponseSerializer(),
             completionHandler: completionHandler
         )
@@ -408,13 +408,13 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func responseString(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         encoding: String.Encoding? = nil,
         completionHandler: @escaping (DataResponse<String>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DataRequest.stringResponseSerializer(encoding: encoding),
             completionHandler: completionHandler
         )
@@ -456,13 +456,13 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func responseString(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         encoding: String.Encoding? = nil,
         completionHandler: @escaping (DownloadResponse<String>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DownloadRequest.stringResponseSerializer(encoding: encoding),
             completionHandler: completionHandler
         )
@@ -529,13 +529,13 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func responseJSON(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         options: JSONSerialization.ReadingOptions = .allowFragments,
         completionHandler: @escaping (DataResponse<Any>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DataRequest.jsonResponseSerializer(options: options),
             completionHandler: completionHandler
         )
@@ -577,13 +577,13 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func responseJSON(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         options: JSONSerialization.ReadingOptions = .allowFragments,
         completionHandler: @escaping (DownloadResponse<Any>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DownloadRequest.jsonResponseSerializer(options: options),
             completionHandler: completionHandler
         )
@@ -650,13 +650,13 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func responsePropertyList(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         options: PropertyListSerialization.ReadOptions = [],
         completionHandler: @escaping (DataResponse<Any>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DataRequest.propertyListResponseSerializer(options: options),
             completionHandler: completionHandler
         )
@@ -698,13 +698,13 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func responsePropertyList(
-        queue: DispatchQueue? = nil,
+        scheduler: SchedulerType? = nil,
         options: PropertyListSerialization.ReadOptions = [],
         completionHandler: @escaping (DownloadResponse<Any>) -> Void)
         -> Self
     {
         return response(
-            queue: queue,
+            scheduler: scheduler,
             responseSerializer: DownloadRequest.propertyListResponseSerializer(options: options),
             completionHandler: completionHandler
         )
